@@ -16,7 +16,9 @@ void proc(void)
     int status,i;
     char *command;
     char **parameters;
-    parameters = malloc(sizeof(char *)*(MAXARG+1));
+    parameters = malloc(sizeof(char *)*(MAXARG+2));
+	//arg[0] is command
+	//arg[MAXARG+1] is NULL
     while(TRUE)
     {
         type_prompt();
@@ -28,7 +30,7 @@ void proc(void)
         }
         else
         {
-            execve(command,parameters,0);
+            execvp(command,parameters);
         }
     }
 }

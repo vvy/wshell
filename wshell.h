@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #define MAXLINE 1024
+//the length of all args is ARG_MAX
 #define MAXARG 10
 
 void type_prompt();

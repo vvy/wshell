@@ -42,11 +42,23 @@ int read_command(char **command,char **parameters)
 
         if(count == 0)
         {
+            char *j,*k;
+            j = pStart,k= pEnd;
             *command = malloc(sizeof(char)*(pEnd - pStart + 1));
             for(i=0;pStart<pEnd;i++,pStart++)
                 (*command)[i] = *pStart;
             (*command)[i] = '\0';
-            count++;
+            k--;
+            while(k!=j && *k !='/')
+                k--;
+            if(*k == '/')
+                k++;
+            //else //k==pStart
+            parameters[0] = malloc(sizeof(char)*(pEnd - j +1));
+            for(i=0;j<pEnd;i++,j++)
+                parameters[0][i] = *j;
+            parameters[0][i] = '\0';
+            count += 2;
             //printf("\ni:%d,command:  %s\n",i,*command);
         }
         else if(count <= MAXARG)
@@ -67,8 +79,8 @@ int read_command(char **command,char **parameters)
 
     /*input analysis*/
     printf("input analysis:\n");
-    printf("command:%s\nparameters:\n",*command);
-    for(i=0;i<count-1;i++)
+    printf("pathname:%s\ncommand:%s\nparameters:\n",*command,parameters[0]);
+    for(i=1;i<count-1;i++)
         printf("%s\n",parameters[i]);
     return count;
 }
