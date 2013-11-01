@@ -9,22 +9,31 @@
  * =====================================================================================
  */
 #include "wshell.h"
+#ifdef READLINE_ON
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
 
 //return value: number of parameters
 //0 represents only command without any parameters
 //-1 represents wrong input
-int read_command(char **command,char **parameters)
+int read_command(char **command,char **parameters,char *prompt)
 {
-    char buffer[MAXLINE];
+#ifdef READLINE_ON
+	buffer  = readline(prompt);
+#else
+	printf("%s",prompt);
     fgets(buffer,MAXLINE,stdin);
+#endif
     if(buffer[0] == '\0')
         return -1;
     char *pStart,*pEnd;
-    int length = 0, count = 0,i;
+    int count = 0;
+    int isFinished = 0;
     pStart = pEnd = buffer;
-    while(*pEnd !='\0' && *pEnd != '\n')
+    while(isFinished == 0)
     {
-        while(*pEnd == ' ' && *pStart == ' ')
+        while((*pEnd == ' ' && *pStart == ' ') || (*pEnd == '\t' && *pStart == '\t'))
         {
             pStart++;
             pEnd++;
@@ -40,38 +49,40 @@ int read_command(char **command,char **parameters)
         while(*pEnd != ' ' && *pEnd != '\0' && *pEnd != '\n')
             pEnd++;
 
+
         if(count == 0)
         {
-            char *j,*k;
-            j = pStart,k= pEnd;
-            *command = malloc(sizeof(char)*(pEnd - pStart + 1));
-            for(i=0;pStart<pEnd;i++,pStart++)
-                (*command)[i] = *pStart;
-            (*command)[i] = '\0';
-            k--;
-            while(k!=j && *k !='/')
-                k--;
-            if(*k == '/')
-                k++;
-            //else //k==pStart
-            parameters[0] = malloc(sizeof(char)*(pEnd - j +1));
-            for(i=0;j<pEnd;i++,j++)
-                parameters[0][i] = *j;
-            parameters[0][i] = '\0';
+            char *p = pEnd;
+            *command = pStart;
+            while(p!=pStart && *p !='/')
+                p--;
+            if(*p == '/')
+                p++;
+            //else //p==pStart
+            parameters[0] = p;
             count += 2;
-            //printf("\ni:%d,command:  %s\n",i,*command);
+            printf("\ncommand:  %s\n",*command);
         }
         else if(count <= MAXARG)
         {
-            parameters[count-1] = malloc(sizeof(char)*(pEnd - pStart + 1));
-            for(i=0;pStart<pEnd;i++,pStart++)
-                parameters[count-1][i] = *pStart;
-            parameters[count-1][i] = '\0';
+            parameters[count-1] = pStart;
             count++;
         }
         else
         {
             break;
+        }
+
+        if(*pEnd == '\0' || *pEnd == '\n')
+        {
+            *pEnd = '\0';
+            isFinished = 1;
+        }
+        else
+        {
+            *pEnd = '\0';
+            pEnd++;
+			pStart = pEnd;
         }
     }
 
@@ -80,6 +91,7 @@ int read_command(char **command,char **parameters)
     /*input analysis*/
     printf("input analysis:\n");
     printf("pathname:%s\ncommand:%s\nparameters:\n",*command,parameters[0]);
+    int i;
     for(i=1;i<count-1;i++)
         printf("%s\n",parameters[i]);
     return count;
