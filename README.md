@@ -2,7 +2,11 @@
 <p>-wshell.c<br />	　　main program</p>
 <p>-type_prompt.c<br />	　　print out the prompt of wshell including path,hostname</p>
 <p>-read_command.c<br />	　　read command input, and analyse the command and parameter(s).</p>
+<p>-builtin_command.c<br />	　　support some built-in command,such as exit,quit,about, and cd.</p>
 <p>-test.c<br />	　　a test program, helloworld, which can be executed in wshell.</p>
-<p>update log:<br />2013</p>
-<p>10.31<br />	　　-use execvp() instead of execve() to handle with commands like ls.<br />	　　-detect whether the shell is executed as root by geteuid()<br />	　　-bug fix:<br />		　　　　execv()'s arg[0] usually is the name of command without path.<br />		　　　　earlier version is not correct.<br />	　　-plan to do:<br />		　　　　a built-in cd command.</p>
+<p>&nbsp;</p>
+<p>update log:</p>
+<p>&nbsp;</p>
+<p>====2013=====</p>
+<p>11.1<br />	　　-implemented some builtin command,such as exit/quit, about, and, cd.<br />	　　-bug fix:<br />		　　　　never free the memory of command and parameters before, which may cause memory leak.<br />		　　　　To solve it, read_command() has been rewrited, and is more like the one in Linux.<br />	　　-rewrite read_command():<br />		　　　　there is no need to malloc for command and parameters any more.<br />		　　　　all these just are pointers now.<br />	　　-supply two versions:<br />		　　　　using readline lib and not.the former need installing readline lib.<br />		　　　　type "make wshell_r" to make the former,and "make wshell" for another.<br />		<br />		<br />10.31<br />	　　-use execvp() instead of execve() to handle with commands like ls.<br />	　　-detect whether the shell is executed as root by geteuid()<br />	　　-bug fix:<br />		　　　　execv()'s arg[0] usually is the name of command without path.<br />		　　　　earlier version is not correct.<br />	　　-plan to do:<br />		　　　　a built-in cd command.</p>
 <p>10.16<br />	　　-a shell with basic function: get input and execute the test program(hello world).<br />	</p>
