@@ -3,7 +3,7 @@
  *       Filename:  read_command.c
  *    Description:  
  *        Version:  1.0
- *        Created:  2013年10月21日 14时12分24秒
+ *        Created:  2013.10.21 14h12min24s
  *         Author:  wuyue (wy), vvuyve@gmail.com
  *        Company:  UESTC
  * =====================================================================================

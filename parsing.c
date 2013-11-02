@@ -3,7 +3,7 @@
  *       Filename:  parsing.c
  *    Description:  
  *        Version:  1.0
- *        Created:  2013年11月02日 15时44分23秒
+ *        Created:  2013.11.02 15h44min23s
  *         Author:  wuyue (wy), vvuyve@gmail.com
  *        Company:  UESTC
  * =====================================================================================

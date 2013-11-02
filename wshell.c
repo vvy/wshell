@@ -3,7 +3,7 @@
  *       Filename:  wshell.c
  *    Description:  
  *        Version:  1.0
- *        Created:  2013年10月16日 17时12分19秒
+ *        Created:  2013.10.16 17h12min19s
  *         Author:  wuyue (wy), vvuyve@gmail.com
  *        Company:  UESTC
  * =====================================================================================

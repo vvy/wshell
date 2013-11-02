@@ -3,7 +3,7 @@
  *       Filename:  builtin_command.c
  *    Description:  
  *        Version:  1.0
- *        Created:  2013年11月01日 15时31分28秒
+ *        Created:  2013.11.01 15h31m28s
  *         Author:  wuyue (wy), vvuyve@gmail.com
  *        Company:  UESTC
  * =====================================================================================

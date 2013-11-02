@@ -3,7 +3,7 @@
  *       Filename:  type_prompt.c
  *    Description:  
  *        Version:  1.0
- *        Created:  2013年10月16日 20时18分28秒
+ *        Created:  2013.10.16 20h18min28s
  *         Author:  wuyue (wy), vvuyve@gmail.com
  *        Company:  UESTC
  * =====================================================================================
