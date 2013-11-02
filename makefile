@@ -1,8 +1,8 @@
-wshell: wshell.h wshell.c type_prompt.c read_command.c builtin_command.c test
-	gcc wshell.c type_prompt.c read_command.c builtin_command.c -o wshell
+wshell: wshell.h wshell.c type_prompt.c read_command.c builtin_command.c parsing.c test
+	gcc wshell.c type_prompt.c read_command.c builtin_command.c parsing.c -o wshell
 
-wshell_r: wshell.h wshell.c type_prompt.c read_command.c builtin_command.c test
-	gcc wshell.c type_prompt.c read_command.c builtin_command.c -o wshell -D READLINE_ON -I /usr/include -lreadline -ltermcap
+wshell_r: wshell.h wshell.c type_prompt.c read_command.c builtin_command.c parsing.c test
+	gcc wshell.c type_prompt.c read_command.c builtin_command.c parsing.c -o wshell -D READLINE_ON -I /usr/include -lreadline -ltermcap
 
 test: test.c
 	gcc test.c -o test

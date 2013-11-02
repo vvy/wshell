@@ -21,9 +21,19 @@ int read_command(char **command,char **parameters,char *prompt)
 {
 #ifdef READLINE_ON
 	buffer  = readline(prompt);
+	if(feof(stdin) == 0)
+	{
+		printf("\n");
+		exit(0);
+	}
 #else
 	printf("%s",prompt);
-    fgets(buffer,MAXLINE,stdin);
+    char* Res_fgets = fgets(buffer,MAXLINE,stdin);
+	if(Res_fgets == NULL)
+	{
+		printf("\n");
+		exit(0);
+	}		
 #endif
     if(buffer[0] == '\0')
         return -1;
@@ -61,7 +71,9 @@ int read_command(char **command,char **parameters,char *prompt)
             //else //p==pStart
             parameters[0] = p;
             count += 2;
+#ifdef DEBUG
             printf("\ncommand:  %s\n",*command);
+#endif
         }
         else if(count <= MAXARG)
         {
@@ -88,11 +100,13 @@ int read_command(char **command,char **parameters,char *prompt)
 
     parameters[count-1] = NULL;
 
+#ifdef DEBUG
     /*input analysis*/
     printf("input analysis:\n");
     printf("pathname:%s\ncommand:%s\nparameters:\n",*command,parameters[0]);
     int i;
-    for(i=1;i<count-1;i++)
+    for(i=0;i<count-1;i++)
         printf("%s\n",parameters[i]);
+#endif
     return count;
 }
