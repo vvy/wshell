@@ -118,6 +118,8 @@ void proc(void)
             execvp(command,parameters);
         }
     }
+    free(parameters);
+	free(buffer);
 }
 
 int main() {
