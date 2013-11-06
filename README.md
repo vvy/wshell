@@ -1,4 +1,4 @@
-<p>A simple simulation of shell in Linux.</p>
+<p>A simple simulation of shell in Linux for learning.</p>
 <p>A blog (in Chinese)&nbsp;of introduction&nbsp;and how to build it :<a href="http://www.cnblogs.com/wuyuegb2312/p/3399566.html">http://www.cnblogs.com/wuyuegb2312/p/3399566.html</a></p>
 <p>usage:<br />============<br />type<br />	　　make wshell<br />for wshell read input by fgets() or<br />	　　make wshell_r<br />for wshell with readline lib.It need to install libreadline5-dev first.</p>
 <p><br />consist of:<br />============<br />-wshell.c<br />　　main program</p>
@@ -9,7 +9,6 @@
 <p>-parsing.c<br />	　　analyses user's input line and tell them to wshell.</p>
 <p><br />update log:<br />============<br />2013</p>
 <p>11.3<br />　　-implemented a simple parsing function parse() to analyses the user input.<br />　　-support I/O redirect, background running, and pipe. <br />　　-bug fix:<br />		　　　　typing ctrl+d will normal exit wshell.before, segment fault when using readline lib.</p>
-<p>&nbsp;</p>
 <p>　　　　lack of free() somewhere ,which may lead to memory leak.</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
