@@ -1,6 +1,8 @@
 <p>A simple simulation of shell in Linux for learning.</p>
 <p>A blog (in Chinese)&nbsp;of introduction&nbsp;and how to build it :<a href="http://www.cnblogs.com/wuyuegb2312/p/3399566.html">http://www.cnblogs.com/wuyuegb2312/p/3399566.html</a></p>
-<p>usage:<br />============<br />type<br />	　　make wshell<br />for wshell read input by fgets() or<br />	　　make wshell_r<br />for wshell with readline lib.It need to install libreadline5-dev first.</p>
+<p>usage:<br />============<br />type<br />	　　<em>make wshell</em><br />for wshell read input by fgets() or<br />	　　<em>make wshell_r</em><br />for wshell with readline lib.It need to install libreadline5-dev first.</p>
+<p>Attention:</p>
+<p>　　Because of&nbsp;<span class="label_list">the lack of support for regular expressions , file's names such as *.c are not support.</span></p>
 <p><br />consist of:<br />============<br />-wshell.c<br />　　main program</p>
 <p>-type_prompt.c<br />　　print out the prompt of wshell including path,hostname</p>
 <p>-read_command.c<br />　　read command input, and analyse the command and parameter(s).</p>
