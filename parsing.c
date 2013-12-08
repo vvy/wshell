@@ -39,9 +39,16 @@ int parsing(char **parameters,int ParaNum,struct parse_info *info)
             parameters[i] = NULL;
             i+=2;
         }
-        else if(strcmp(parameters[i],">>")==0 || strcmp(parameters[i],">")==0)
+        else if(strcmp(parameters[i],">")==0)
         {
             info->flag |= OUT_REDIRECT;
+            info->out_file = parameters[i+1];
+            parameters[i] = NULL;
+            i+=2;
+        }
+        else if(strcmp(parameters[i],">>")==0)
+        {
+            info->flag |= OUT_REDIRECT_APPEND;
             info->out_file = parameters[i+1];
             parameters[i] = NULL;
             i+=2;

@@ -36,10 +36,11 @@ void proc(void);
 
 #ifndef STRUCT_PARSE_INFO
 #define STRUCT_PARSE_INFO
-#define BACKGROUND 		1
-#define IN_REDIRECT 	2
-#define OUT_REDIRECT 	4
-#define IS_PIPED 		8
+#define BACKGROUND 			1
+#define IN_REDIRECT 		2
+#define OUT_REDIRECT 		4
+#define OUT_REDIRECT_APPEND	8
+#define IS_PIPED 			16
 struct parse_info 
 {
     int flag;

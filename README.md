@@ -10,6 +10,9 @@
 <p>-test.c<br />　　a test program, helloworld, which can be executed in wshell.</p>
 <p>-parsing.c<br />	　　analyses user's input line and tell them to wshell.</p>
 <p><br />update log:<br />============<br />2013</p>
+<p>12.8</p>
+<p>&nbsp; &nbsp; &nbsp;-bug fix:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; Output redirect function was not completed. '&gt;' still is for make new file,but '&gt;&gt;' append to any file now.</p>
 <p>11.3<br />　　-implemented a simple parsing function parse() to analyses the user input.<br />　　-support I/O redirect, background running, and pipe. <br />　　-bug fix:<br />		　　　　typing ctrl+d will normal exit wshell.before, segment fault when using readline lib.</p>
 <p>　　　　lack of free() somewhere ,which may lead to memory leak.</p>
 <p>&nbsp;</p>
