@@ -14,7 +14,7 @@
 <p>4.14</p>
 <p>　　-bug fix:</p>
 <p>　　　　Add handler of&nbsp;SIGCHLD. Earlier wshell would ignore the&nbsp;<span>zombie process in background.</span></p>
-<p><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTING: The handler only process the background process whose pid are saved in a array.</span></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTING: The handler only process the background process whose pid are saved in a array.</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Adjust some indents, although they are not errors.</p>
 <p><span>&nbsp;</span></p>
 <p>2013</p>
