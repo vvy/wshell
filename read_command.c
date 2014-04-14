@@ -20,20 +20,20 @@
 int read_command(char **command,char **parameters,char *prompt)
 {
 #ifdef READLINE_ON
-	buffer  = readline(prompt);
-	if(feof(stdin) == 0)
-	{
-		printf("\n");
-		exit(0);
-	}
+    buffer  = readline(prompt);
+    if(feof(stdin) == 0)
+    {
+        printf("\n");
+        exit(0);
+    }
 #else
-	printf("%s",prompt);
+    printf("%s",prompt);
     char* Res_fgets = fgets(buffer,MAXLINE,stdin);
-	if(Res_fgets == NULL)
-	{
-		printf("\n");
-		exit(0);
-	}		
+    if(Res_fgets == NULL)
+    {
+        printf("\n");
+        exit(0);
+    }		
 #endif
     if(buffer[0] == '\0')
         return -1;

@@ -15,6 +15,7 @@
 #include <fcntl.h> 
 #include <errno.h>
 #include <pwd.h>
+#include <signal.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h> 
@@ -31,6 +32,7 @@ int read_command(char **,char **,char*);
 int builtin_command(char *,char **);
 int parsing(char **,int,struct parse_info *);
 void proc(void);
+void sig_handler(int sig);
 
 
 

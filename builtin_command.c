@@ -25,14 +25,14 @@ int builtin_command(char *command, char **parameters)
         char *cd_path = NULL;
         if(parameters[1][0] == '~')
         {
-			cd_path = malloc(strlen(pwd->pw_dir)+strlen(parameters[1]));
-			//'~' makes length 1 more,but instead of '\0'
+            cd_path = malloc(strlen(pwd->pw_dir)+strlen(parameters[1]));
+            //'~' makes length 1 more,but instead of '\0'
             if(cd_path == NULL)
             {
                 printf("cd:malloc failed.\n");
             }
-			strcpy(cd_path,pwd->pw_dir);
-			strncpy(cd_path+strlen(pwd->pw_dir),parameters[1]+1,strlen(parameters[1]));
+            strcpy(cd_path,pwd->pw_dir);
+            strncpy(cd_path+strlen(pwd->pw_dir),parameters[1]+1,strlen(parameters[1]));
 			//printf("path with ~:\n%s\n",cd_path);
         }
         else

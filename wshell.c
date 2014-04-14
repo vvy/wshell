@@ -11,6 +11,18 @@
 #include "wshell.h"
 #define TRUE 1
 
+void sig_handler(int sig)
+{
+    pid_t pid;
+    while((pid = waitpid(-1,NULL,WNOHANG))>0)
+    {
+        printf("process %d exited.\n",pid);
+    }
+	if(errno != ECHILD)
+        perror("waitpid error");
+    return;
+}
+
 void proc(void)
 {
     int status,i;
@@ -29,6 +41,10 @@ void proc(void)
     }
 	//arg[0] is command
 	//arg[MAXARG+1] is NULL
+
+	if(signal(SIGCHLD,sig_handler) == SIG_ERR)
+        perror("signal() error");
+
     while(TRUE)
     {
         int pipe_fd[2],in_fd,out_fd;

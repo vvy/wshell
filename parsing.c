@@ -56,7 +56,7 @@ int parsing(char **parameters,int ParaNum,struct parse_info *info)
         else if(strcmp(parameters[i],"|")==0)
         {
             char* pCh;
-			info->flag |= IS_PIPED;
+            info->flag |= IS_PIPED;
             parameters[i] = NULL;
             info->command2 = parameters[i+1];
             info->parameters2 = &parameters[i+1];
