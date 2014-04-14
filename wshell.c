@@ -17,7 +17,7 @@ void proc(void)
     char *command = NULL;
     char **parameters;
     int ParaNum;
-	char prompt[MAX_PROMPT];
+    char prompt[MAX_PROMPT];
     struct parse_info info;
     pid_t ChdPid;
     parameters = malloc(sizeof(char *)*(MAXARG+2));
@@ -35,11 +35,11 @@ void proc(void)
         type_prompt(prompt);
         ParaNum = read_command(&command,parameters,prompt);
         if(-1 == ParaNum)
-			continue;
+            continue;
         ParaNum--;//count of units in buffer
-		parsing(parameters,ParaNum,&info);
-		if(builtin_command(command,parameters))
-			continue;
+        parsing(parameters,ParaNum,&info);
+        if(builtin_command(command,parameters))
+            continue;
         if(info.flag & IS_PIPED) //command2 is not null
         {                
             if(pipe(pipe_fd)<0)
@@ -120,7 +120,7 @@ void proc(void)
             
             if(info.flag & IN_REDIRECT)
             {
-				in_fd = open(info.in_file, O_CREAT |O_RDONLY, 0666);
+                in_fd = open(info.in_file, O_CREAT |O_RDONLY, 0666);
                 close(fileno(stdin)); 
                 dup2(in_fd, fileno(stdin));
                 close(in_fd); 
