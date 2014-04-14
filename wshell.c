@@ -10,16 +10,31 @@
  */
 #include "wshell.h"
 #define TRUE 1
+#define MAXPIDTABLE 1024
+
+pid_t BPTable[MAXPIDTABLE];
 
 void sig_handler(int sig)
 {
     pid_t pid;
-    while((pid = waitpid(-1,NULL,WNOHANG))>0)
-    {
-        printf("process %d exited.\n",pid);
-    }
-	if(errno != ECHILD)
-        perror("waitpid error");
+    int i;
+    for(i=0;i<MAXPIDTABLE;i++)
+        if(BPTable[i] != 0) //only handler the background processes
+        {
+            pid = waitpid(BPTable[i],NULL,WNOHANG);
+            if(pid > 0)
+            {
+                printf("process %d exited.\n",pid);
+                BPTable[i] = 0; //clear
+            }
+            else if(pid < 0)
+            {
+	            if(errno != ECHILD)
+                    perror("waitpid error");
+            }
+            //else:do nothing.
+            //Not background processses has their waitpid() in wshell.
+         }
     return;
 }
 
@@ -31,7 +46,7 @@ void proc(void)
     int ParaNum;
     char prompt[MAX_PROMPT];
     struct parse_info info;
-    pid_t ChdPid;
+    pid_t ChdPid,ChdPid2;
     parameters = malloc(sizeof(char *)*(MAXARG+2));
     buffer = malloc(sizeof(char) * MAXLINE);
     if(parameters == NULL || buffer == NULL)
@@ -68,7 +83,7 @@ void proc(void)
         {
             if(info.flag & IS_PIPED)
             {
-                if(fork() == 0) //command2
+                if((ChdPid2=fork()) == 0) //command2
                 {
                     close(pipe_fd[1]);
                     close(fileno(stdin)); 
@@ -80,15 +95,23 @@ void proc(void)
                 {
                     close(pipe_fd[0]);
                     close(pipe_fd[1]);
-                    waitpid(-1,&status,0); //wait command2
+                    waitpid(ChdPid2,&status,0); //wait command2
                 }
             }
 
             if(info.flag & BACKGROUND)
+            {
                 printf("Child pid:%u\n",ChdPid);
+                int i;
+                for(i=0;i<MAXPIDTABLE;i++)
+                    if(BPTable[i]==0)
+                        BPTable[i] = ChdPid; //register a background process
+                if(i==MAXPIDTABLE)
+                    perror("Too much background processes\nThere will be zombine process");                    
+            }
             else
             {          
-                waitpid(-1,&status,0);//wait command1
+                waitpid(ChdPid,&status,0);//wait command1
             } 
         }
         else //command1
@@ -149,6 +172,10 @@ void proc(void)
 }
 
 int main() {
+    int i;
+    //init the BPTable
+    for(i=0;i<MAXPIDTABLE;i++)
+        BPTable[i] = 0;
     proc();
     return 0;
 }

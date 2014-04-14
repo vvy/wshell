@@ -14,15 +14,15 @@
 <p>4.14</p>
 <p>　　-bug fix:</p>
 <p>　　　　Add handler of&nbsp;SIGCHLD. Earlier wshell would ignore the&nbsp;<span>zombie process in background.</span></p>
+<p><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTING: The handler only process the background process whose pid are saved in a array.</span></p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Adjust some indents, although they are not errors.</p>
 <p><span>&nbsp;</span></p>
-<p><br />2013</p>
+<p>2013</p>
 <p>12.8</p>
 <p>&nbsp; &nbsp; &nbsp;-bug fix:</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp; Output redirect function was not completed. '&gt;' still is for make new file,but '&gt;&gt;' append to any file now.</p>
-<p>11.3<br />　　-implemented a simple parsing function parse() to analyses the user input.<br />　　-support I/O redirect, background running, and pipe. <br />　　-bug fix:<br />		　　　　typing ctrl+d will normal exit wshell.before, segment fault when using readline lib.</p>
-<p>　　　　lack of free() somewhere ,which may lead to memory leak.</p>
-<p>&nbsp;</p>
+<p>11.3<br />　　-implemented a simple parsing function parse() to analyses the user input.<br />　　-support I/O redirect, background running, and pipe. <br />　　-bug fix:<br />		　　　　typing ctrl+d will normal exit wshell. before, segment fault when using readline lib.</p>
+<p>　　　　lack of free() somewhere, which may lead to memory leak.</p>
 <p>&nbsp;</p>
 <p>11.1<br />　　-implemented some builtin command,such as exit/quit, about, and, cd.<br />　　-bug fix:<br />　　　　Never free the memory of command and parameters before, which may cause memory leak.<br />　　　　To solve it, read_command() has been rewrited, and is more like the one in Linux.<br />　　-rewrite read_command():<br />　　　　there is no need to malloc for command and parameters any more.<br />　　　　all these just are pointers now.<br />　　-supply two versions:<br />　　　　using readline lib and not.the former need installing readline lib.<br />　　　　type "make wshell_r" to make the former,and "make wshell" for another.</p>
 <p><br />10.31<br />　　-use execvp() instead of execve() to handle with commands like ls.<br />　　-detect whether the shell is executed as root by geteuid()<br />　　-bug fix:<br />　　　　execv()'s arg[0] usually is the name of command without path.<br />　　　　earlier version is not correct.<br />　　-plan to do:<br />　　　　a built-in cd command.</p>
