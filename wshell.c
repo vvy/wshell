@@ -44,8 +44,8 @@ void proc(void)
         {                
             if(pipe(pipe_fd)<0)
             {
-                    printf("Wshell error:pipe failed.\n");
-                    exit(0);
+                printf("Wshell error:pipe failed.\n");
+                exit(0);
             }
         }  
         if((ChdPid = fork())!=0) //wshell
