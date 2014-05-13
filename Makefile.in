@@ -1,0 +1,43 @@
+source= wshell.c type_prompt.c read_command.c builtin_command.c parsing.c
+package= wshell
+version= 0.1
+tarname= $(package)
+distdir= $(tarname)-$(version)
+
+
+all clean check install wshell uninstall:
+	cd src && $(MAKE) $@
+dist:$(distdir).tar.gz
+makefile: makefile.in config.status
+	./config.status $@
+$(distdir).tar.gz:$(distdir)
+	tar chof - $(distdir) | gzip -9 -c > $@
+	rm -rf $(distdir)
+$(distdir):force
+	mkdir -p $(distdir)/src
+	cp Makefile $(distdir)
+	cp src/Makefile $(distdir)/src
+	cp src/main.c $(distdir)/src
+force:
+	-rm $(distdir).tar.gz > /dev/null 2>&1
+	-rm -rf $(distdir) > /dev/null 2>&1
+distcheck:$(distdir).tar.gz
+	gzip -cd $(distdir).tar.gz | tar xvf -
+	cd $(distdir) && $(MAKE) all
+	cd $(distdir) && $(MAKE) check
+	cd $(distdir) && $(MAKE) clean
+	rm -rf $(distdir)
+	@echo "*** Package $(distdir).tar.gz is ready for distribution"
+
+wshell: wshell.h wshell.c test $(source)
+	$(CC) -g -O0 -o $@  $(source)  
+
+wshell_r: wshell.h test  $(source)
+	$(CC)  -g -O0 -o $@   $(source)  -D READLINE_ON  -lreadline -ltermcap 
+
+test: test.c
+	$(CC) test.c -o test
+
+clean:
+	-rm  -f wshell test
+.PHONY: all clean dist force distcheck 
