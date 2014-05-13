@@ -11,12 +11,22 @@ bindir      =@bindir@
 srcdir =@srcdir@
 vpath  =@srcdir@
 
+source= wshell.c type_prompt.c read_command.c builtin_command.c parsing.c
+all: wshell wshell_r 
+
 Makefile: Makefile.in ../config.status
 	cd .. && ./config.status src/$@
 ../config.status: ../configure
 	cd .. && ./config.status --recheck 
+	$(CC)  -g -O0 -o $@   $(source)  -D READLINE_ON  -lreadline -ltermcap 
 wshell: wshell.h wshell.c test $(source)
 	$(CC) -g -O0 -o $@  $(source)  
 
 wshell_r: wshell.h test  $(source)
 	$(CC)  -g -O0 -o $@   $(source)  -D READLINE_ON  -lreadline -ltermcap 
+
+test: test.c
+	$(CC) test.c -o test
+
+clean:
+	-rm  -f wshell test

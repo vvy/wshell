@@ -15,9 +15,14 @@ $(distdir).tar.gz:$(distdir)
 	rm -rf $(distdir)
 $(distdir):force
 	mkdir -p $(distdir)/src
-	cp Makefile $(distdir)
-	cp src/Makefile $(distdir)/src
-	cp src/main.c $(distdir)/src
+	cp $(srcdir)/configure.ac $(distdir)
+	cp $(srcdir)/configure   $(distdir)
+	cp $(srcdir)/config.h.in $(distdir)
+	cp $(srcdir)/install-sh  $(distdir)
+
+	cp $(srcdir)/Makefile.in $(distdir)
+	cp $(srcdir)/src/Makefile.in $(distdir)/src
+	cp $(srcdir)/src/main.c $(distdir)/src
 force:
 	-rm $(distdir).tar.gz > /dev/null 2>&1
 	-rm -rf $(distdir) > /dev/null 2>&1
@@ -29,15 +34,5 @@ distcheck:$(distdir).tar.gz
 	rm -rf $(distdir)
 	@echo "*** Package $(distdir).tar.gz is ready for distribution"
 
-wshell: wshell.h wshell.c test $(source)
-	$(CC) -g -O0 -o $@  $(source)  
 
-wshell_r: wshell.h test  $(source)
-	$(CC)  -g -O0 -o $@   $(source)  -D READLINE_ON  -lreadline -ltermcap 
-
-test: test.c
-	$(CC) test.c -o test
-
-clean:
-	-rm  -f wshell test
 .PHONY: all clean dist force distcheck 
