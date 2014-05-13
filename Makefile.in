@@ -1,0 +1,45 @@
+source= wshell.c type_prompt.c read_command.c builtin_command.c parsing.c
+package= @PACKAGE_NAME@
+version= @PACKAGE_VERSION@
+
+tarname= @PACKAGE_TARNAME@
+distdir= $(tarname)-$(version)
+#prefix-specix
+bindir =@bindir@
+
+#vpath-specific
+srcdir =@srcdir@
+VPATH  =@srcdir@
+
+all  check install  run wshell_r  wshell uninstall:
+	cd src && $(MAKE) $@
+dist:$(distdir).tar.gz
+
+$(distdir).tar.gz:$(distdir)
+	tar chof - $(distdir) | gzip -9 -c > $@
+	rm -rf $(distdir)
+$(distdir):force
+	mkdir -p $(distdir)/src
+	cp $(srcdir)/configure.ac $(distdir)
+	cp $(srcdir)/configure   $(distdir)
+	cp $(srcdir)/config.h.in $(distdir)
+	cp $(srcdir)/install-sh  $(distdir)
+
+	cp $(srcdir)/Makefile.in $(distdir)
+	cp $(srcdir)/src/Makefile.in $(distdir)/src
+	cp $(srcdir)/src/main.c $(distdir)/src
+force:
+	-rm $(distdir).tar.gz > /dev/null 2>&1
+	-rm -rf $(distdir) > /dev/null 2>&1
+distcheck:$(distdir).tar.gz
+	gzip -cd $(distdir).tar.gz | tar xvf -
+	cd $(distdir) && $(MAKE) all
+	cd $(distdir) && $(MAKE) check
+	cd $(distdir) && $(MAKE) clean
+	rm -rf $(distdir)
+	@echo "*** Package $(distdir).tar.gz is ready for distribution"
+
+clean:
+	-rm -rf $(ls -1 |grep ^#[^#]*#$)
+	cd src && make $@
+.PHONY: all clean dist force distcheck run

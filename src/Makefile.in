@@ -1,0 +1,32 @@
+package =@PACKAGE_NAME@
+version =@PACKAGE_VERSION@
+tarname =@PACKAGE_TARNAME@
+distdir =$(tarname)-$(version)
+
+# prefix-specific
+prefix      =@prefix@
+exec_prefix =@exec_prefix@
+bindir      =@bindir@
+# vpath-related subtitution variables
+srcdir =@srcdir@
+vpath  =@srcdir@
+
+source= wshell.c type_prompt.c read_command.c builtin_command.c parsing.c
+all: wshell wshell_r 
+run:wshell
+	./wshell
+Makefile: Makefile.in ../config.status
+	cd .. && ./config.status src/$@
+../config.status: ../configure
+	cd .. && ./config.status --recheck 
+wshell: wshell.h wshell.c test $(source)
+	$(CC) -std=c99 -g -O0 -o $@  $(source)  
+
+wshell_r: wshell.h test  $(source)
+	$(CC) -std=c99  -g -O0 -o $@   $(source)  -D READLINE_ON  -lreadline -ltermcap 
+
+test: test.c
+	$(CC) test.c -o test
+
+clean:
+	-rm  -f wshell test

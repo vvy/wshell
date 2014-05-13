@@ -25,7 +25,7 @@
 
 struct parse_info;
 struct passwd *pwd;
-char *buffer;
+char buffer[MAXLINE+1];
 
 void type_prompt(char*);
 int read_command(char **,char **,char*);

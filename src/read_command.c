@@ -17,8 +17,7 @@
 //return value: number of parameters
 //0 represents only command without any parameters
 //-1 represents wrong input
-int read_command(char **command,char **parameters,char *prompt)
-{
+int read_command(char **command,char **parameters,char *prompt){
 #ifdef READLINE_ON
     buffer  = readline(prompt);
     if(feof(stdin) == 0)
