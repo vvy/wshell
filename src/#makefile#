@@ -1,0 +1,13 @@
+CFLAGS ?= -g -O0
+check:all
+	@echo "***ALL TESTS PASSED"
+install:
+	cp wshell ~/bin
+	chmod +x ~/bin/wshell
+wshell:main.c
+	$(CC) $(CCPFLAGS) $(CFLAGS) -o $@ $(source)
+
+unstall:
+	-rm ~/bin/wshell
+
+.PHONY:all clean check install 

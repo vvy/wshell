@@ -1,0 +1,22 @@
+package =@PACKAGE_NAME@
+version =@PACKAGE_VERSION@
+tarname =@PACKAGE_TARNAME@
+distdir =$(tarname)-$(version)
+
+# prefix-specific
+prefix      =@prefix@
+exec_prefix =@exec_prefix@
+bindir      =@bindir@
+# vpath-related subtitution variables
+srcdir =@srcdir@
+vpath  =@srcdir@
+
+Makefile: Makefile.in ../config.status
+	cd .. && ./config.status src/$@
+../config.status: ../configure
+	cd .. && ./config.status --recheck 
+wshell: wshell.h wshell.c test $(source)
+	$(CC) -g -O0 -o $@  $(source)  
+
+wshell_r: wshell.h test  $(source)
+	$(CC)  -g -O0 -o $@   $(source)  -D READLINE_ON  -lreadline -ltermcap 
