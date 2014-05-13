@@ -1,15 +1,20 @@
 source= wshell.c type_prompt.c read_command.c builtin_command.c parsing.c
-package= wshell
-version= 0.1
-tarname= $(package)
+package= @PACKAGE_NAME@
+version= @PACKAGE_VERSION@
+
+tarname= @PACKAGE_TARNAME@
 distdir= $(tarname)-$(version)
+#prefix-specix
+bindir =@bindir@
 
+#vpath-specific
+srcdir =@srcdir@
+VPATH  =@srcdir@
 
-all clean check install wshell uninstall:
+all  check install  run wshell_r  wshell uninstall:
 	cd src && $(MAKE) $@
 dist:$(distdir).tar.gz
-makefile: makefile.in config.status
-	./config.status $@
+
 $(distdir).tar.gz:$(distdir)
 	tar chof - $(distdir) | gzip -9 -c > $@
 	rm -rf $(distdir)
@@ -34,5 +39,7 @@ distcheck:$(distdir).tar.gz
 	rm -rf $(distdir)
 	@echo "*** Package $(distdir).tar.gz is ready for distribution"
 
-
-.PHONY: all clean dist force distcheck 
+clean:
+	-rm -rf $(ls -1 |grep ^#[^#]*#$)
+	cd src && make $@
+.PHONY: all clean dist force distcheck run

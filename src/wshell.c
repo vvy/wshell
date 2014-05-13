@@ -8,49 +8,43 @@
  *        Company:  UESTC
  * =====================================================================================
  */
+#define _POSIX_SOURCE 
+//fileno(): _POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE
+
 #include "wshell.h"
 #define TRUE 1
 #define MAXPIDTABLE 1024
 
 pid_t BPTable[MAXPIDTABLE];
 
-void sig_handler(int sig)
-{
+void sig_handler(int sig){
     pid_t pid;
-    int i;
-    for(i=0;i<MAXPIDTABLE;i++)
-        if(BPTable[i] != 0) //only handler the background processes
-        {
-            pid = waitpid(BPTable[i],NULL,WNOHANG);
-            if(pid > 0)
-            {
-                printf("process %d exited.\n",pid);
-                BPTable[i] = 0; //clear
-            }
-            else if(pid < 0)
-            {
-	            if(errno != ECHILD)
-                    perror("waitpid error");
-            }
+    for(int i=0;i<MAXPIDTABLE;i++)
+      if(BPTable[i] != 0){ //only handler the background processes
+        pid = waitpid(BPTable[i],NULL,WNOHANG);
+        if(pid > 0) {
+          printf("process %d exited.\n",pid);
+          BPTable[i] = 0; //clear
+        }else if(pid < 0){
+          if(errno != ECHILD)
+            perror("waitpid error");
+        }
             //else:do nothing.
             //Not background processses has their waitpid() in wshell.
-         }
+      }
     return;
 }
 
-void proc(void)
-{
+void proc(void){
     int status,i;
     char *command = NULL;
-    char **parameters;
     int ParaNum;
     char prompt[MAX_PROMPT];
     struct parse_info info;
     pid_t ChdPid,ChdPid2;
-    parameters = malloc(sizeof(char *)*(MAXARG+2));
-    buffer = malloc(sizeof(char) * MAXLINE);
-    if(parameters == NULL || buffer == NULL)
-    {
+    char** parameters = malloc(sizeof(char *)*(MAXARG+2));
+    char* buffer = malloc(sizeof(char) * MAXLINE);
+    if(parameters == NULL || buffer == NULL)    {
         printf("Wshell error:malloc failed.\n");
         return;
     }
@@ -60,8 +54,7 @@ void proc(void)
 	if(signal(SIGCHLD,sig_handler) == SIG_ERR)
         perror("signal() error");
 
-    while(TRUE)
-    {
+    while(TRUE){
         int pipe_fd[2],in_fd,out_fd;
         type_prompt(prompt);
         ParaNum = read_command(&command,parameters,prompt);
@@ -108,13 +101,10 @@ void proc(void)
                         BPTable[i] = ChdPid; //register a background process
                 if(i==MAXPIDTABLE)
                     perror("Too much background processes\nThere will be zombine process");                    
-            }
-            else
-            {          
+            }else {          
                 waitpid(ChdPid,&status,0);//wait command1
             } 
-        }
-        else //command1
+        }        else //command1
         {
 			
             if(info.flag & IS_PIPED) //command2 is not null

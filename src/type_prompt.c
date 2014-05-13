@@ -9,6 +9,7 @@
  * =====================================================================================
  */
 //#include <sys/utsname.h>
+#define _BSD_SOURCE
 #include "wshell.h"
 const int max_name_len = 256;
 const int max_path_len = 1024;
@@ -41,8 +42,9 @@ void type_prompt(char *prompt)
     return;
 }
 
-//int main()
-//{
-//    type_prompt();
+//int main(){
+//  char l[90];
+//    type_prompt(l);
+//    printf("%s",l);
 //    return 0;
 //}
