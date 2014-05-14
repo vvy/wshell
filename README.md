@@ -11,6 +11,11 @@
 <p>-parsing.c<br />	　　analyses user's input line and tell them to wshell.</p>
 <p><br />update log:<br />============</p>
 <p>2014</p>
+<p>5.14</p>
+<p>&nbsp; &nbsp; -Bug fix:</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; In readline mode, the spaces alloced by readline() was freed only once.Now they are all freed in the end of read_command().</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;As noted by&nbsp;<a id="a_comment_author_2938345" href="http://home.cnblogs.com/u/614123/" target="_blank">xingfe123</a></p>
+<p>&nbsp;</p>
 <p>4.14</p>
 <p>&nbsp; &nbsp; -Bug fix:</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp; Add handler of&nbsp;SIGCHLD. Earlier wshell would ignore the&nbsp;zombie process in background.</p>
