@@ -20,6 +20,7 @@
 int read_command(char **command,char **parameters,char *prompt)
 {
 #ifdef READLINE_ON
+    char* tmpbuffer = buffer
     buffer  = readline(prompt);
     if(feof(stdin) == 0)
     {
@@ -107,6 +108,12 @@ int read_command(char **command,char **parameters,char *prompt)
     int i;
     for(i=0;i<count-1;i++)
         printf("%s\n",parameters[i]);
+#endif
+
+//free the space of readline()
+#ifdef READLINE_ON
+    free(buffer);
+    buffer = tmpbuffer;
 #endif
     return count;
 }
