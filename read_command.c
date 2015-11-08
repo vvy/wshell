@@ -20,13 +20,12 @@
 int read_command(char **command,char **parameters,char *prompt)
 {
 #ifdef READLINE_ON
-    char* tmpbuffer = buffer
-    buffer  = readline(prompt);
-    if(feof(stdin) == 0)
-    {
+    buffer = readline(prompt);
+    if(feof(stdin)) {
         printf("\n");
         exit(0);
     }
+
 #else
     printf("%s",prompt);
     char* Res_fgets = fgets(buffer,MAXLINE,stdin);
@@ -36,6 +35,7 @@ int read_command(char **command,char **parameters,char *prompt)
         exit(0);
     }		
 #endif
+
     if(buffer[0] == '\0')
         return -1;
     char *pStart,*pEnd;
@@ -73,7 +73,7 @@ int read_command(char **command,char **parameters,char *prompt)
             parameters[0] = p;
             count += 2;
 #ifdef DEBUG
-            printf("\ncommand:  %s\n",*command);
+            printf("\ncommand:%s\n",*command);
 #endif
         }
         else if(count <= MAXARG)
@@ -104,16 +104,11 @@ int read_command(char **command,char **parameters,char *prompt)
 #ifdef DEBUG
     /*input analysis*/
     printf("input analysis:\n");
-    printf("pathname:%s\ncommand:%s\nparameters:\n",*command,parameters[0]);
+    printf("pathname:[%s]\ncommand:[%s]\nparameters:\n",*command,parameters[0]);
     int i;
     for(i=0;i<count-1;i++)
-        printf("%s\n",parameters[i]);
+        printf("[%s]\n",parameters[i]);
 #endif
 
-//free the space of readline()
-#ifdef READLINE_ON
-    free(buffer);
-    buffer = tmpbuffer;
-#endif
     return count;
 }

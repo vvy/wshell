@@ -23,6 +23,15 @@ int builtin_command(char *command, char **parameters)
     else if(strcmp(command,"cd")==0)
     {
         char *cd_path = NULL;
+
+        if(parameters[1] == NULL)
+        //make "cd" to "cd .." as in bash
+        {
+            parameters[1] = malloc(3 * sizeof(char));
+            parameters[1][0]= '.';
+            parameters[1][1]= '.';
+            parameters[1][2]= '\0';
+        }
         if(parameters[1][0] == '~')
         {
             cd_path = malloc(strlen(pwd->pw_dir)+strlen(parameters[1]));
