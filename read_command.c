@@ -20,6 +20,7 @@
 int read_command(char **command,char **parameters,char *prompt)
 {
 #ifdef READLINE_ON
+    free(buffer);
     buffer = readline(prompt);
     if(feof(stdin)) {
         printf("\n");
