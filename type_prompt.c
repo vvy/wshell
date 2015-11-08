@@ -27,7 +27,7 @@ void type_prompt(char *prompt)
         sprintf(prompt,"[Wshell]%s@unknown:",pwd->pw_name);
     //printf("pathname: %s,length:%d\npw_dir:%s,length:%d\n",
     //pathname,strlen(pathname),pwd->pw_dir,strlen(pwd->pw_dir));
-	length = strlen(prompt);
+    length = strlen(prompt);
     if(strlen(pathname) < strlen(pwd->pw_dir) || 
             strncmp(pathname,pwd->pw_dir,strlen(pwd->pw_dir))!=0)
         sprintf(prompt+length,"%s",pathname);

@@ -80,5 +80,5 @@ int parsing(char **parameters,int ParaNum,struct parse_info *info)
 	printf("pipe:");
 	info->flag&IS_PIPED?printf("yes,command:%s %s %s\n",info->command2,info->parameters2[0],info->parameters2[1]):printf("no\n");
 #endif
-	return 1;
+    return 1;
 }

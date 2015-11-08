@@ -29,7 +29,7 @@ void sig_handler(int sig)
             }
             else if(pid < 0)
             {
-	            if(errno != ECHILD)
+	if(errno != ECHILD)
                     perror("waitpid error");
             }
             //else:do nothing.
@@ -57,7 +57,7 @@ void proc(void)
 	//arg[0] is command
 	//arg[MAXARG+1] is NULL
 
-	if(signal(SIGCHLD,sig_handler) == SIG_ERR)
+    if(signal(SIGCHLD,sig_handler) == SIG_ERR)
         perror("signal() error");
 
     while(TRUE)
@@ -120,20 +120,20 @@ void proc(void)
             if(info.flag & IS_PIPED) //command2 is not null
             {                
                 if(!(info.flag & OUT_REDIRECT) && !(info.flag & OUT_REDIRECT_APPEND)) // ONLY PIPED
-				{
+	{
                     close(pipe_fd[0]);
                     close(fileno(stdout)); 
                     dup2(pipe_fd[1], fileno(stdout));
                     close(pipe_fd[1]);
                 }
                 else //OUT_REDIRECT and PIPED
-				{
+	{
                     close(pipe_fd[0]);
                     close(pipe_fd[1]);//send a EOF to command2
                     if(info.flag & OUT_REDIRECT)
-    		            out_fd = open(info.out_file, O_WRONLY|O_CREAT|O_TRUNC, 0666);
+    	       out_fd = open(info.out_file, O_WRONLY|O_CREAT|O_TRUNC, 0666);
                     else
-    		            out_fd = open(info.out_file, O_WRONLY|O_APPEND|O_TRUNC, 0666);
+    	       out_fd = open(info.out_file, O_WRONLY|O_APPEND|O_TRUNC, 0666);
                     close(fileno(stdout)); 
                     dup2(out_fd, fileno(stdout));
                     close(out_fd);	        
@@ -142,15 +142,15 @@ void proc(void)
             else
             {
                 if(info.flag & OUT_REDIRECT) // OUT_REDIRECT WITHOUT PIPE
-				{
-		            out_fd = open(info.out_file, O_WRONLY|O_CREAT|O_TRUNC, 0666);
+	{
+                    out_fd = open(info.out_file, O_WRONLY|O_CREAT|O_TRUNC, 0666);
                     close(fileno(stdout)); 
                     dup2(out_fd, fileno(stdout));
                     close(out_fd);
                 }
                 if(info.flag & OUT_REDIRECT_APPEND) // OUT_REDIRECT_APPEND WITHOUT PIPE
-				{
-		            out_fd = open(info.out_file, O_WRONLY|O_APPEND|O_TRUNC, 0666);
+	{
+                    out_fd = open(info.out_file, O_WRONLY|O_APPEND|O_TRUNC, 0666);
                     close(fileno(stdout)); 
                     dup2(out_fd, fileno(stdout));
                     close(out_fd);
