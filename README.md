@@ -46,6 +46,7 @@ for wshell with readline lib.It need to install libreadline5-dev first.
     -Make the README.md be a real markdown file.
     -Bug fix:
         Redirection operator ">>" will append a file, not trunc it to 0-size.
+        As noted by [caiminfeng](http://www.cnblogs.com/caiminfeng/).
 
 ## 2014
 ### 05.14
@@ -54,7 +55,7 @@ for wshell with readline lib.It need to install libreadline5-dev first.
 
         In readline mode, the spaces alloced by readline() was freed only once.Now they are all freed in the end of read_command().
 
-        As noted by xingfe123
+        As noted by [xingfe123](http://home.cnblogs.com/u/614123/)
 
  
 
