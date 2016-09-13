@@ -63,6 +63,7 @@ void proc(void)
     while(TRUE)
     {
         int pipe_fd[2],in_fd,out_fd;
+        int ret;
         type_prompt(prompt);
         ParaNum = read_command(&command,parameters,prompt);
         if(-1 == ParaNum)
@@ -89,7 +90,12 @@ void proc(void)
                     close(fileno(stdin)); 
                     dup2(pipe_fd[0], fileno(stdin));
                     close(pipe_fd[0]); 
-                    execvp(info.command2,info.parameters2);
+                    ret = execvp(info.command2,info.parameters2);
+                    if(ret < 0)
+                    {
+                    	perror("command error");
+                    	exit(-1);
+                    }
                 }
                 else
                 {
@@ -164,7 +170,12 @@ void proc(void)
                 dup2(in_fd, fileno(stdin));
                 close(in_fd); 
             }
-            execvp(command,parameters);
+            ret = execvp(command,parameters);
+            if(ret < 0)
+            {
+            	perror("command error");
+            	exit(-1);
+            }
         }
     }
     free(parameters);
