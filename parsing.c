@@ -24,7 +24,7 @@ int parsing(char **parameters,int ParaNum,struct parse_info *info)
 {
     int i;
     parse_info_init(info);
-    if(strcmp(parameters[ParaNum-1],"&") ==0)
+    if(strncmp(parameters[ParaNum-1],"&",sizeof(parameters[ParaNum-1])) == 0)
     {
         info->flag |= BACKGROUND;
         parameters[ParaNum-1] = NULL;
@@ -32,28 +32,28 @@ int parsing(char **parameters,int ParaNum,struct parse_info *info)
     }
     for(i=0;i<ParaNum;)
     {
-        if(strcmp(parameters[i],"<<")==0 || strcmp(parameters[i],"<")==0)
+        if(strncmp(parameters[i],"<<",sizeof(parameters[i]) )== 0 || strncmp(parameters[i],"<",sizeof(parameters[i])) == 0)
         {
             info->flag |= IN_REDIRECT;
             info->in_file = parameters[i+1];
             parameters[i] = NULL;
             i+=2;
         }
-        else if(strcmp(parameters[i],">")==0)
+        else if(strncmp(parameters[i],">",sizeof(parameters[i])) == 0)
         {
             info->flag |= OUT_REDIRECT;
             info->out_file = parameters[i+1];
             parameters[i] = NULL;
             i+=2;
         }
-        else if(strcmp(parameters[i],">>")==0)
+        else if(strncmp(parameters[i],">>",sizeof(parameters[i])) == 0)
         {
             info->flag |= OUT_REDIRECT_APPEND;
             info->out_file = parameters[i+1];
             parameters[i] = NULL;
             i+=2;
         }
-        else if(strcmp(parameters[i],"|")==0)
+        else if(strncmp(parameters[i],"|",sizeof(parameters[i])) == 0)
         {
             char* pCh;
             info->flag |= IS_PIPED;
@@ -73,11 +73,11 @@ int parsing(char **parameters,int ParaNum,struct parse_info *info)
     }
 #ifdef DEBUG
 	printf("\nbackground:%s\n",info->flag&BACKGROUND?"yes":"no");
-	printf("in redirect:");
+	puts("in redirect:");
 	info->flag&IN_REDIRECT?printf("yes,file:%s\n",info->in_file):printf("no\n");
-	printf("out redirect:");
+	puts("out redirect:");
 	info->flag&OUT_REDIRECT?printf("yes,file:%s\n",info->out_file):printf("no\n");
-	printf("pipe:");
+	puts("pipe:");
 	info->flag&IS_PIPED?printf("yes,command:%s %s %s\n",info->command2,info->parameters2[0],info->parameters2[1]):printf("no\n");
 #endif
     return 1;
